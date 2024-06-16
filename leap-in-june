@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+
+import datetime
+from common import get_leap_week_dn, generate_samples, play_samples
+
+
+# Generate and play samples with a minimal time jump
+# relatively to the current time.
+if __name__ == '__main__':
+	print("Generating samples")
+	leap = datetime.datetime(2024, 7, 1)
+	now = datetime.datetime.now(datetime.UTC)
+	today = datetime.datetime(year=now.year, month=now.month, day=now.day)
+	days = (leap - today).days
+	now, weeks, dn = get_leap_week_dn(offset=days)
+	gps_ls = 19
+	file = f'/data/leap-{weeks}-{dn}-{gps_ls}.bin'
+	# It will take approximately 3 minutes 16 seconds to generate 
+	# 1800 seconds worth of samples
+	start = now + datetime.timedelta(minutes=3, seconds=16)
+	generate_samples(start, weeks, dn, file, gps_ls)
+	play_samples(file)

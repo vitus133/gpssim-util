@@ -41,6 +41,8 @@ def play_samples(path):
 
 # Generates gps simulator samples for leap tonight:
 def generate_samples(start, weeks, dn, file, ls):
+    print(f"start time: {start}")
+    print(f"leap time: {weeks},{dn},{ls}")
     commands = [[
         '/usr/local/bin/gps-sdr-sim',
         '-e',
@@ -51,6 +53,8 @@ def generate_samples(start, weeks, dn, file, ls):
         '8',
         '-d',
         '1800',
+        '-t',
+        f"{start.year}/{start.month}/{start.day},{start.hour}:{start.minute}",
         '-T',
         f"{start.year}/{start.month}/{start.day},{start.hour}:{start.minute}",
         '-L',
