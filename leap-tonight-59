@@ -1,0 +1,17 @@
+#!/usr/bin/python3
+
+import datetime
+from common import get_leap_week_dn, generate_samples, play_samples
+import os
+
+
+if __name__ == '__main__':
+	print("Generating samples")
+	now, weeks, dn = get_leap_week_dn(offset=1)
+	gps_ls = 17
+	file = f'/data/leap-{weeks}-{dn}-{gps_ls}.bin'
+	if not os.path.isfile(file):
+		start = datetime.datetime(year=now.year, month=now.month, day=now.day,
+							hour=23, minute=40)
+		generate_samples(start, weeks, dn, file, gps_ls)
+	play_samples(file)
